@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+from utils import *
+
+def get_path(arg_name):
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        arg_name,
+        nargs='?',
+        default=os.getcwd(),
+        help="System path for which you want directory listing"
+    )
+
+    args = parser.parse_args()
+    return str(args.directory_path)
+
+def display_file_infos(file_infos, file_inf_dir):
+    def prepare_title(title):
+        title = title.replace(file_inf_dir + '/', '')
+        title_len = len(title)
+
+        if title_len > 32:
+            return title[0:29] + '...'
+        else:
+            return title
+
+    def prepare_owner_and_group(owner, group):
+        return "{}:{}".format(owner, group)
+
+
+    # max_len = max(file_infos, key=len)
+
+    printable = ""
+    for file_inf in file_infos:
+
+        _t_str = "{} {:32} {} {:>7} {:>4} {}".format(
+            file_inf.type,
+            prepare_title(file_inf.title),
+            file_inf.modtime,
+            file_inf.size,
+            file_inf.permission,
+            prepare_owner_and_group(file_inf.owner, file_inf.group)
+        )
+
+        if len(printable) == 0:
+            printable = _t_str
+        else:
+            printable += "\n" + _t_str
+
+    print(printable)
+
+
+if __name__ == '__main__':
+    try:
+        directory_path = get_path('directory_path')
+        files = check_and_get_file_infos(directory_path)
+        display_file_infos(files, directory_path)
+
+    except Exception as e:
+        exit(e)
