@@ -21,23 +21,19 @@ def display_file_infos(file_infos):
 
     def prepare_title(title):
         title_len = len(title)
-
-        if title_len > 32:
-            return title[0:29] + '...'
-        else:
-            return title
+        return (title[0:29] + '...') if title_len > 32 else title
 
     def prepare_owner_and_group(owner, group):
         return "{}:{}".format(owner, group)
 
     title_pad = max(len(title) for title in map(lambda x: x.title, file_infos))
     title_pad = title_pad if title_pad < 32 else 32
-
-    printable = ""
     format_str = "{} {:" + str(title_pad) + "} {} {:>8} {:>4} {}"
 
+    printable = ""
+
     for file_inf in file_infos:
-        _t_str = format_str.format(
+        _t_printable = format_str.format(
             file_inf.type,
             prepare_title(file_inf.title),
             file_inf.modtime,
@@ -47,9 +43,9 @@ def display_file_infos(file_infos):
         )
 
         if len(printable) == 0:
-            printable = _t_str
+            printable = _t_printable
         else:
-            printable += "\n" + _t_str
+            printable += "\n" + _t_printable
 
     print(printable)
 
