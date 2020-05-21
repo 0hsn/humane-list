@@ -91,7 +91,6 @@ def __find_perm(f_mode: int) -> str:
     mod_dec = S_IMODE(f_mode)
     return str(oct(mod_dec))[2:]
 
-## https://code.activestate.com/recipes/578323-human-readable-filememory-sizes-v2/
 # https://stackoverflow.com/a/1094933
 
 def sizeof_fmt(num, suffix='B'):

@@ -17,11 +17,9 @@ def get_path(arg_name):
     args = parser.parse_args()
     return str(args.directory_path)
 
-def display_file_infos(file_infos, file_inf_dir):
-    # file_inf_dir_len = len(file_inf_dir)+1
+def display_file_infos(file_infos):
 
     def prepare_title(title):
-        # title = title[file_inf_dir_len:]
         title_len = len(title)
 
         if title_len > 32:
@@ -32,7 +30,6 @@ def display_file_infos(file_infos, file_inf_dir):
     def prepare_owner_and_group(owner, group):
         return "{}:{}".format(owner, group)
 
-    # title_pad = max(len(title) for title in map(lambda x: x.title[file_inf_dir_len:], file_infos))
     title_pad = max(len(title) for title in map(lambda x: x.title, file_infos))
     title_pad = title_pad if title_pad < 32 else 32
 
