@@ -58,7 +58,7 @@ if __name__ == '__main__':
     try:
         directory_path = get_path('directory_path')
         files = check_and_get_file_infos(directory_path)
-        display_file_infos(files, directory_path)
+        display_file_infos(files)
 
     except Exception as e:
         exit(e)
