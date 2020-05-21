@@ -18,8 +18,7 @@ class FileInfo:
 def check_and_get_file_infos(sys_path: str) -> List[FileInfo]:
     if os.path.exists(sys_path):
         directories = os.listdir(sys_path)
-        directories = __get_merged_dir_path(directories, sys_path)
-        return __get_file_infos(directories)
+        return __get_file_infos(directories, sys_path)
     else:
         raise FileNotFoundError(f"{sys_path} is not a file or directory")
 
@@ -37,11 +36,12 @@ def __get_merged_dir_path(dirs: List[str], sys_path: str) -> List[str]:
     return merged_dirs
 
 
-def __get_file_infos(dirs: List[str]) -> List[FileInfo]:
+def __get_file_infos(dirs: List[str], sys_path: str) -> List[FileInfo]:
     file_infos = []
+    dirs.sort()
 
     for dir in dirs:
-        stat_res = os.stat(dir)
+        stat_res = os.stat(sys_path + '/' + dir)
         file_infos.append(
             FileInfo(
                 title=dir,
